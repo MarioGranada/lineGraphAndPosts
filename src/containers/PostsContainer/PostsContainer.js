@@ -7,6 +7,38 @@ import {
 import DataTable from '../../shared/components/DataTable/DataTable';
 
 const PostsContainer = () => {
+  const [postsState, setPostsState] = useState([]);
+  const [postIdState, setPostIdState] = useState(null);
+  const [userIdState, setUserIdState] = useState(null);
+  const [postsByUserState, setPostsByUserState] = useState([]);
+  const [commentsState, setCommentsState] = useState([]);
+
+  useEffect(() => {
+    getAllPosts().then(({ data }) => {
+      setPostsState(data);
+    });
+  }, []);
+
+  useEffect(() => {
+    if (userIdState) {
+      getPostsByUserId(userIdState).then(({ data }) => {
+        setPostsByUserState(data);
+      });
+    } else {
+      setPostsByUserState([]);
+    }
+  }, [userIdState]);
+
+  useEffect(() => {
+    if (postIdState) {
+      getCommentsByPostId(postIdState).then(({ data }) => {
+        setCommentsState(data);
+      });
+    } else {
+      setPostsByUserState([]);
+    }
+  }, [postIdState]);
+
   const postColumns = [
     {
       dataField: 'userId',
@@ -67,38 +99,6 @@ const PostsContainer = () => {
       text: 'Comment Body'
     }
   ];
-
-  const [postsState, setPostsState] = useState([]);
-  const [postIdState, setPostIdState] = useState(null);
-  const [userIdState, setUserIdState] = useState(null);
-  const [postsByUserState, setPostsByUserState] = useState([]);
-  const [commentsState, setCommentsState] = useState([]);
-
-  useEffect(() => {
-    getAllPosts().then(({ data }) => {
-      setPostsState(data);
-    });
-  }, []);
-
-  useEffect(() => {
-    if (userIdState) {
-      getPostsByUserId(userIdState).then(({ data }) => {
-        setPostsByUserState(data);
-      });
-    } else {
-      setPostsByUserState([]);
-    }
-  }, [userIdState]);
-
-  useEffect(() => {
-    if (postIdState) {
-      getCommentsByPostId(postIdState).then(({ data }) => {
-        setCommentsState(data);
-      });
-    } else {
-      setPostsByUserState([]);
-    }
-  }, [postIdState]);
 
   return (
     <div className="post-container">
