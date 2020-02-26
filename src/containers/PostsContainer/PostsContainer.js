@@ -6,6 +6,8 @@ import {
 } from '../../shared/services/PostsAPI/PostAPI';
 import DataTable from '../../shared/components/DataTable/DataTable';
 
+import './PostsContainer.scss';
+
 const PostsContainer = () => {
   const [postsState, setPostsState] = useState([]);
   const [postIdState, setPostIdState] = useState(null);
@@ -102,20 +104,30 @@ const PostsContainer = () => {
 
   return (
     <div className="post-container">
+      <h1>Post Management</h1>
+
+      <h3>Posts</h3>
       <DataTable keyField="id" data={postsState} columns={postColumns} />
       {userIdState && (
-        <DataTable
-          keyField="id"
-          data={postsByUserState}
-          columns={postColumns}
-        />
+        <>
+          <h3>Post by user with id: {userIdState}</h3>
+
+          <DataTable
+            keyField="id"
+            data={postsByUserState}
+            columns={postColumns}
+          />
+        </>
       )}
       {postIdState && (
-        <DataTable
-          keyField="id"
-          data={commentsState}
-          columns={commentsColumns}
-        />
+        <>
+          <h3>Comments by Post with id: {postIdState}</h3>
+          <DataTable
+            keyField="id"
+            data={commentsState}
+            columns={commentsColumns}
+          />
+        </>
       )}
     </div>
   );

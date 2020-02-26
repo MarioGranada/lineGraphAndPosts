@@ -9,6 +9,8 @@ import {
 } from '@material-ui/core';
 import Chart from 'react-apexcharts';
 
+import './LineGraphContainer.scss';
+
 const LineGraphContainer = () => {
   const [csvFileDataState, setCsvFileDataState] = useState({});
   const [csvFileHeadersState, setCsvFileHeadersState] = useState([]);
@@ -72,62 +74,66 @@ const LineGraphContainer = () => {
 
   return (
     <div className="line-graph-container">
-      <FormControl>
-        <CSVReader
-          onFileLoaded={onCSVFileLoaded}
-          parserOptions={csvParseOptions}
-          cssClass="react-csv-input"
-          label="Select CSV"
-        />
-      </FormControl>
+      <h1> Line Graph</h1>
+      <div className="chart-form">
+        <h3>Graph data:</h3>
+        <FormControl>
+          <CSVReader
+            onFileLoaded={onCSVFileLoaded}
+            parserOptions={csvParseOptions}
+            cssClass="react-csv-input"
+            label="Select CSV file"
+          />
+        </FormControl>
+        <br />
 
-      <FormControl variant="outlined">
-        <FormLabel>X Axis</FormLabel>
+        <FormControl variant="outlined">
+          <FormLabel>X Axis</FormLabel>
 
-        <Select
-          labelId="x-axis"
-          labelWidth={500}
-          value={xAxisState}
-          onChange={selectXAxisStateHandler}
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          {csvFileHeadersState &&
-            csvFileHeadersState.map(item => (
-              <MenuItem key={item} value={item}>
-                {item}
-              </MenuItem>
-            ))}
-        </Select>
-      </FormControl>
+          <Select
+            labelId="x-axis"
+            labelWidth={500}
+            value={xAxisState}
+            onChange={selectXAxisStateHandler}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {csvFileHeadersState &&
+              csvFileHeadersState.map(item => (
+                <MenuItem key={item} value={item}>
+                  {item}
+                </MenuItem>
+              ))}
+          </Select>
+        </FormControl>
 
-      <FormControl variant="outlined">
-        <FormLabel>Y Axis</FormLabel>
+        <FormControl variant="outlined">
+          <FormLabel>Y Axis</FormLabel>
 
-        <Select
-          labelId="y-axis"
-          labelWidth={500}
-          value={yAxisState}
-          onChange={selectYAxisStateHandler}
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          {csvFileHeadersState &&
-            csvFileHeadersState.map(item => (
-              <MenuItem key={item} value={item}>
-                {item}
-              </MenuItem>
-            ))}
-        </Select>
-      </FormControl>
-      <FormControl>
-        <Button color="primary" variant="contained" onClick={drawChart}>
-          Apply
-        </Button>
-      </FormControl>
-
+          <Select
+            labelId="y-axis"
+            labelWidth={500}
+            value={yAxisState}
+            onChange={selectYAxisStateHandler}
+          >
+            <MenuItem value="">
+              <em>None</em>
+            </MenuItem>
+            {csvFileHeadersState &&
+              csvFileHeadersState.map(item => (
+                <MenuItem key={item} value={item}>
+                  {item}
+                </MenuItem>
+              ))}
+          </Select>
+        </FormControl>
+        <FormControl>
+          <Button color="primary" variant="contained" onClick={drawChart}>
+            Apply
+          </Button>
+        </FormControl>
+      </div>
       <div className="chart-box">
         <Chart
           options={chartState.options}
