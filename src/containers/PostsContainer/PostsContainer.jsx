@@ -26,8 +26,6 @@ const PostsContainer = () => {
       getPostsByUserId(userIdState).then(({ data }) => {
         setPostsByUserState(data);
       });
-    } else {
-      setPostsByUserState([]);
     }
   }, [userIdState]);
 
@@ -36,8 +34,6 @@ const PostsContainer = () => {
       getCommentsByPostId(postIdState).then(({ data }) => {
         setCommentsState(data);
       });
-    } else {
-      setPostsByUserState([]);
     }
   }, [postIdState]);
 

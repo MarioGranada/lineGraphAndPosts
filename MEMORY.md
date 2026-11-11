@@ -1,35 +1,31 @@
 # Line Graph and Posts — Working Memory
 
-_Last updated: 2026-11-02_
+_Last updated: 2026-11-12_
 
 ## Current status
 
-- `master` contains the CRA scaffold; `develop` contains the CSV chart and posts explorer.
-- ApexCharts, CSV reader, posts table, and JSONPlaceholder client are implemented on `develop`.
-- No deployment workflow or meaningful tests yet.
+- `develop` merged into the Vite-migrated `master` (2026-11): CSV chart and posts explorer on Vite 8 + Vitest.
+- GitHub Pages workflow deploys `master`; 2 route tests; `yarn audit` clean.
 
 ## Key decisions
 
-- Kept the implementation on `develop`, following the original branch workflow.
+- Stayed on React 16 / MUI 4 / Bootstrap 4; upgraded axios to 1.x and pinned patched transitive deps.
 - Used JSONPlaceholder so the posts view needs no backend.
 
 ## Known limitations and follow-ups
 
-- node-sass 4 constrains the Node version.
-- Comments reset bug in `PostsContainer`.
+- Bundle is ~1 MB because of ApexCharts; route-level code splitting would help.
 - No caching, retries, or empty-state polish.
 
 ## Mistakes to avoid
 
-- Do not evaluate the project from `master`.
-- Do not assume the CSV parser coerces numbers; the option is misspelled.
+- Do not remove the `events` dependency (needed by react-bootstrap-table-next in the browser).
 - Do not add API keys — JSONPlaceholder needs none.
 
 ## Next steps
 
-- Fix the comments reset bug.
-- Add a Pages workflow.
-- Migrate from node-sass to Dart Sass and consider Vite.
+- Lazy-load ApexCharts to shrink the bundle.
+- Add empty/error states for the posts API.
 
 ---
 

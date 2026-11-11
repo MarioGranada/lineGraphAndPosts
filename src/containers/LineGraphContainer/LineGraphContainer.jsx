@@ -12,7 +12,7 @@ import Chart from 'react-apexcharts';
 import './LineGraphContainer.scss';
 
 const LineGraphContainer = () => {
-  const [csvFileDataState, setCsvFileDataState] = useState({});
+  const [csvFileDataState, setCsvFileDataState] = useState([]);
   const [csvFileHeadersState, setCsvFileHeadersState] = useState([]);
 
   const [xAxisState, setXAxisState] = useState('');
@@ -47,6 +47,7 @@ const LineGraphContainer = () => {
   };
 
   const drawChart = () => {
+    if (!csvFileDataState.length || !xAxisState || !yAxisState) return;
     const xValues = csvFileDataState.map(item => item[xAxisState]);
     const yValues = csvFileDataState.map(item => item[yAxisState]);
     const data = xValues.map((item, index) => ({ x: item, y: yValues[index] }));
@@ -64,7 +65,7 @@ const LineGraphContainer = () => {
   const csvParseOptions = {
     header: true,
     skipEmptyLines: true,
-    dynamicTypiing: true
+    dynamicTyping: true
   };
 
   const onCSVFileLoaded = data => {

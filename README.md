@@ -1,6 +1,8 @@
 # Line Graph and Posts
 
-A two-view React challenge: a CSV-driven line chart and a posts explorer backed by JSONPlaceholder. The `develop` branch contains the implementation; `master` holds the Create React App scaffold.
+A two-view React challenge: a CSV-driven line chart and a posts explorer backed by JSONPlaceholder.
+
+**Live demo:** https://mariogranada.github.io/lineGraphAndPosts/
 
 The line graph view lets a user load a CSV, choose the X and Y columns, and render an ApexCharts line chart. The posts view lists posts and lets the user drill into posts by user and comments by post.
 
@@ -18,17 +20,18 @@ The line graph view lets a user load a CSV, choose the X and Y columns, and rend
 
 | Layer | Technology |
 | --- | --- |
-| Framework | React 16 (Create React App 3) |
+| Framework | React 16 + Vite 8 |
 | Routing | React Router 5 |
 | Charts | ApexCharts + react-apexcharts |
 | Tables | react-bootstrap-table-next |
-| Data | Axios + JSONPlaceholder |
-| Styling | SCSS via node-sass + Material UI 4 |
+| Data | Axios 1 + JSONPlaceholder |
+| Styling | SCSS via Sass (dart-sass) + Bootstrap 4 CSS + Material UI 4 |
+| Testing | Vitest + React Testing Library |
 
 ## Project structure
 
 ```text
-lineGraphAndPosts/          # master = scaffold; develop = implementation
+lineGraphAndPosts/
 ├── src/
 │   ├── containers/
 │   │   ├── LineGraphContainer/  # CSV upload and chart
@@ -38,9 +41,11 @@ lineGraphAndPosts/          # master = scaffold; develop = implementation
 │   │   │   ├── DataTable/
 │   │   │   └── hoc/Layout/      # Layout, NavBar, Footer
 │   │   └── services/PostsAPI/   # JSONPlaceholder client
-│   ├── App.js
-│   └── index.js
+│   ├── App.jsx
+│   └── index.jsx
 ├── public/
+├── index.html               # Vite entry
+├── vite.config.mjs
 └── package.json
 ```
 
@@ -48,14 +53,13 @@ lineGraphAndPosts/          # master = scaffold; develop = implementation
 
 ### Requirements
 
-- Node.js 14 recommended; `node-sass` 4 does not build on modern Node versions.
+- Node.js 22.12+ (or 20.19+).
 - Yarn 1.x (a `yarn.lock` is committed).
 - Internet access for the JSONPlaceholder API.
 
 ### 1. Install dependencies
 
 ```bash
-git checkout develop
 yarn install
 ```
 
@@ -64,25 +68,24 @@ yarn install
 **Start the development server**
 
 ```bash
-yarn start
+yarn dev
 ```
 
-Open http://localhost:3000.
-
-If Node 17+ reports an OpenSSL error, use Node 16 or `NODE_OPTIONS=--openssl-legacy-provider`.
+Open http://localhost:3000/lineGraphAndPosts/.
 
 ### Available scripts
 
 | Command | Description |
 | --- | --- |
-| `yarn start` | Start CRA on port 3000. |
-| `yarn build` | Create a production build. |
-| `yarn test` | Run the CRA test runner. |
-| `yarn eject` | Eject CRA configuration (irreversible). |
+| `yarn dev` | Start the Vite dev server on port 3000. |
+| `yarn build` | Create a production build in `dist/`. |
+| `yarn preview` | Serve the production build locally. |
+| `yarn test` | Run the Vitest suite once (`yarn test:watch` to watch). |
+| `yarn lint` | Run ESLint. |
 
 ## How it works
 
-`App.js` defines two routes inside a shared `Layout`: `/` renders `LineGraphContainer`, `/posts` renders `PostsContainer`.
+`App.jsx` defines two routes inside a shared `Layout`: `/` renders `LineGraphContainer`, `/posts` renders `PostsContainer`.
 
 `LineGraphContainer` parses the uploaded CSV into an array of row objects, derives the headers, and builds an ApexCharts series from the selected X and Y columns.
 
@@ -92,15 +95,16 @@ If Node 17+ reports an OpenSSL error, use Node 16 or `NODE_OPTIONS=--openssl-leg
 
 ## Deployment
 
-- Target: GitHub Actions builds the `develop` branch and publishes `build/` to GitHub Pages. Configure the repository `homepage` first.
+- GitHub Actions (`.github/workflows/deploy.yml`) runs tests, builds with `base: '/lineGraphAndPosts/'`, copies `index.html` to `404.html` for deep links, and publishes `dist/` to `gh-pages` on every push to `master`.
 - The app is fully client-side; no backend or database is required.
 - JSONPlaceholder is a public demo API; do not depend on it for production data.
 
 ## Notes and limitations
 
-- The implementation is on `develop`, not `master`. Check out `develop` before running the app.
-- `node-sass` 4 is the main toolchain constraint; modern Node needs a workaround or a Sass migration.
-- The posts view has a small state bug on the develop branch: clearing the selected post resets `postsByUserState` instead of `commentsState`. Verify before extending it.
+- `develop` was merged into `master` (2026-11); `master` is now the implementation.
+- `react-bootstrap-table-next` imports Node's `events` module; the `events` package provides it in the browser (webpack 4 used to polyfill it).
+- Security overrides live in `package.json` `resolutions` (`underscore`, `path-to-regexp`, `@babel/runtime`).
+- The bundle is ~1 MB (ApexCharts); Vite warns about chunk size but it is not an error.
 
 ---
 

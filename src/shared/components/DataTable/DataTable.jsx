@@ -11,7 +11,7 @@ const DataTable = ({ keyField, data, columns }) => {
       data={data}
       columns={columns}
       pagination={paginationFactory()}
-      boostrap4={true}
+      bootstrap4={true}
     />
   );
 };

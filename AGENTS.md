@@ -6,13 +6,14 @@ Compact guide for future OpenCode sessions. It records only the facts an agent i
 
 | Command | Description |
 | --- | --- |
-| `git checkout develop` | Switch to the implementation branch. |
 | `yarn install` | Install dependencies. |
-| `yarn start` | Start the app at http://localhost:3000. |
+| `yarn dev` | Start the app at http://localhost:3000/lineGraphAndPosts/. |
+| `yarn test` | Run Vitest once. |
+| `yarn build` | Production build to `dist/`. |
 
 ## Requirements
 
-- Node.js 14 recommended; `node-sass` 4 does not build on modern Node versions.
+- Node.js 22.12+ (or 20.19+).
 - Yarn 1.x (a `yarn.lock` is committed).
 - Internet access for the JSONPlaceholder API.
 
@@ -30,14 +31,16 @@ Compact guide for future OpenCode sessions. It records only the facts an agent i
 
 ## Commands and build order
 
-- Work on `develop`; `master` is only the scaffold.
-- Run `yarn build` to verify the production bundle.
-- `yarn test` exists but has no meaningful coverage on the scaffold.
+- `master` is the implementation (develop was merged in 2026-11). Pushes to `master` deploy to GitHub Pages.
+- Run `yarn lint`, `yarn test` and `yarn build` before finishing a change.
+- Tests mock `react-apexcharts` (jsdom has no ResizeObserver/SVG layout) and the posts API.
 
 ## Conventions and gotchas
 
-- node-sass 4 is incompatible with current Node; do not upgrade Node casually.
-- The CSV parser uses `dynamicTypiing` (typo in source) — do not assume numeric coercion is enabled.
+- React 16.14 uses the classic JSX runtime (`vite.config.mjs`); keep `import React` in JSX files.
+- `react-bootstrap-table-next` needs the `events` package in the browser — do not remove it.
+- The CSV parser uses `dynamicTyping`, so numeric columns are parsed as numbers.
+- `package.json` `resolutions` pin patched `underscore`, `path-to-regexp`, `@babel/runtime`.
 - Chart axes require both an X and a Y selection before drawing.
 - JSONPlaceholder requests fail offline and the UI does not retry.
 

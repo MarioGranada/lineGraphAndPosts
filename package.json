@@ -3,20 +3,18 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.9.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "apexcharts": "^3.15.6",
-    "axios": "^0.19.2",
-    "bootstrap": "^4.4.1",
-    "react": "^16.12.0",
-    "react-apexcharts": "^1.3.6",
-    "react-bootstrap": "^1.0.0-beta.16",
-    "react-bootstrap-table-next": "^3.3.5",
-    "react-bootstrap-table2-paginator": "^2.1.0",
-    "react-csv-reader": "^2.0.2",
-    "react-dom": "^16.12.0",
-    "react-router-dom": "^5.1.2"
+    "@material-ui/core": "^4.12.4",
+    "apexcharts": "^3.54.1",
+    "axios": "^1.21.1",
+    "bootstrap": "~4.6.2",
+    "events": "^3.3.0",
+    "react": "^16.14.0",
+    "react-apexcharts": "~1.5.0",
+    "react-bootstrap-table-next": "^4.0.3",
+    "react-bootstrap-table2-paginator": "^2.1.2",
+    "react-csv-reader": "^2.2.1",
+    "react-dom": "^16.14.0",
+    "react-router-dom": "^5.3.4"
   },
   "scripts": {
     "dev": "vite",
@@ -32,6 +30,7 @@
   "devDependencies": {
     "@eslint/js": "^9",
     "@testing-library/jest-dom": "~6.9.1",
+    "@testing-library/react": "^12",
     "@vitejs/plugin-react": "^6",
     "eslint": "^9",
     "eslint-plugin-react-hooks": "^7.1.1",
@@ -41,5 +40,10 @@
     "sass": "^1.108.1",
     "vite": "^8",
     "vitest": "^5"
+  },
+  "resolutions": {
+    "underscore": "^1.13.8",
+    "path-to-regexp": "^1.9.0",
+    "@babel/runtime": "^7.26.10"
   }
 }

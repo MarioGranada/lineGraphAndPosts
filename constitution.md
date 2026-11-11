@@ -15,12 +15,12 @@ This document defines the non-negotiable foundations for this repository. Read i
 
 | Layer | Choice | Rationale |
 | --- | --- | --- |
-| Framework | React 16 (Create React App 3) | The challenge used CRA. |
+| Framework | React 16 + Vite 8 | Vite replaced the unmaintained Create React App. |
 | Routing | React Router 5 | Two top-level views with a shared layout. |
 | Charts | ApexCharts + react-apexcharts | Declarative line chart from parsed CSV data. |
 | Tables | react-bootstrap-table-next | Sortable/paginated posts table. |
-| Data | Axios + JSONPlaceholder | Public demo API for posts and comments. |
-| Styling | SCSS via node-sass + Material UI 4 | Challenge-era styling stack. |
+| Data | Axios 1 + JSONPlaceholder | Public demo API for posts and comments. |
+| Styling | SCSS via Sass (dart-sass) + Material UI 4 | Challenge-era styling, on a maintained Sass compiler. |
 
 **Rule of thumb:** a new dependency must solve a concrete problem that the current stack cannot solve cleanly. Justify it in the change that introduces it.
 
@@ -40,7 +40,7 @@ A challenge project demonstrating CSV parsing, charting, and table drill-down. K
 
 - Keep API calls in `shared/services/` and chart/table state in their containers.
 - Shared layout and table components belong in `shared/components/`.
-- The `develop` branch is the implementation branch; `master` is the release point.
+- `master` is the implementation and release branch; work in feature branches merged by PR.
 
 ### 4. Data and State
 
@@ -62,15 +62,14 @@ A challenge project demonstrating CSV parsing, charting, and table drill-down. K
 
 ### 7. Deployment
 
-- Publish the `develop` build to GitHub Pages through Actions.
-- Set the correct `homepage`/base path for the repository.
+- Publish the `master` build (`dist/`) to GitHub Pages through Actions.
+- Keep `base: '/lineGraphAndPosts/'` in `vite.config.mjs`.
 - No server deployment is needed.
 
 ## What to Avoid
 
-- Running the app from `master` and assuming it is broken.
 - Adding backend code for a public demo API.
-- Upgrading CRA/node-sass without a migration plan.
+- Upgrading React/MUI/Bootstrap majors without a migration plan.
 - Assuming CSV columns are numeric without validating them.
 
 ## Checklist Before Adding Anything New
