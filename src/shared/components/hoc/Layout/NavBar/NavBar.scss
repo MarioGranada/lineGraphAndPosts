@@ -1,0 +1,16 @@
+.nav-bar {
+  padding: 15px;
+  margin-bottom: 15px;
+  box-shadow: 0 5px 5px -5px #333;
+}
+
+.nav-bar-list li {
+  margin: 15px;
+  padding: 15px;
+  box-sizing: border-box;
+}
+
+.nav-bar-list {
+  display: flex;
+  margin-bottom: 0;
+}
